@@ -1,26 +1,81 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* 지면 */
+  --paper: #f6f5f1;
+  --card: #ffffff;
+  --ink: #17181a;
+  --ink-2: #4a4d52;
+  --ink-3: #7b7f86;
+  --rule: #e0ded6;
+  --rule-2: #cbc8bd;
+
+  /* 구간 색 — 이 두 색이 제안의 핵심 경계다 */
+  --ai: #6b46a8;
+  --ai-bg: #f3eefb;
+  --rule-c: #0f6b66;
+  --rule-bg: #e8f4f2;
+
+  /* 상태 */
+  --unknown: #a35a05;
+  --unknown-bg: #fdf2e0;
+  --sign: #1f3a5f;
+  --sign-bg: #eaf0f7;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-paper: var(--paper);
+  --color-card: var(--card);
+  --color-ink: var(--ink);
+  --color-ink2: var(--ink-2);
+  --color-ink3: var(--ink-3);
+  --color-rule: var(--rule);
+  --color-rule2: var(--rule-2);
+  --color-ai: var(--ai);
+  --color-aibg: var(--ai-bg);
+  --color-rulec: var(--rule-c);
+  --color-rulebg: var(--rule-bg);
+  --color-unknown: var(--unknown);
+  --color-unknownbg: var(--unknown-bg);
+  --color-sign: var(--sign);
+  --color-signbg: var(--sign-bg);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html,
+body {
+  background: var(--paper);
+  color: var(--ink);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Pretendard Variable", Pretendard, "Apple SD Gothic Neo",
+    "Malgun Gothic", "맑은 고딕", system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-feature-settings: "tnum" 1;
+  letter-spacing: -0.01em;
+}
+
+.mono {
+  font-family: ui-monospace, "Cascadia Mono", Consolas, "D2Coding",
+    "Courier New", monospace;
+  font-feature-settings: normal;
+  letter-spacing: 0;
+}
+
+/* 격자 배경 — 계산 시트의 결 */
+.gridpaper {
+  background-image: linear-gradient(
+      to right,
+      rgba(23, 24, 26, 0.045) 1px,
+      transparent 1px
+    ),
+    linear-gradient(to bottom, rgba(23, 24, 26, 0.045) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+.hair {
+  border: 1px solid var(--rule);
+}
+
+.tabnum {
+  font-variant-numeric: tabular-nums;
 }
