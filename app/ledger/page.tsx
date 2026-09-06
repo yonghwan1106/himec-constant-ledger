@@ -35,7 +35,8 @@ export default function LedgerScreen() {
             <p className="mt-1 text-[19px] font-bold leading-tight text-[var(--ink)]">
               이 항목군에서 근거가 기록된 값은{" "}
               <span className="mono text-[var(--sign)]">{item.samples}</span>건
-              중 <span className="mono text-[var(--sign)]">{item.withReason}</span>
+              중{" "}
+              <span className="mono text-[var(--sign)]">{item.withReason}</span>
               건입니다.
             </p>
           </div>
@@ -63,100 +64,157 @@ export default function LedgerScreen() {
         </div>
 
         <div className="grid items-start gap-4 xl:grid-cols-[1.05fr_1fr]">
-          {/* 항목군 표 */}
-          <Card
-            title="항목군별 대장"
-            tag={
-              <span className="text-[11px] text-[var(--ink-3)]">
-                행을 누르면 오른쪽에 층화 분포가 펼쳐집니다
-              </span>
-            }
-          >
-            <table className="w-full text-left text-[12.5px]">
-              <thead>
-                <tr className="border-b border-[var(--rule-2)] text-[11px] text-[var(--ink-3)]">
-                  <th className="pb-1.5 font-semibold">본부 · 항목</th>
-                  <th className="pb-1.5 text-center font-semibold">표본</th>
-                  <th className="pb-1.5 text-center font-semibold">
-                    값의 가짓수
-                  </th>
-                  <th className="pb-1.5 font-semibold">사유 부착률</th>
-                </tr>
-              </thead>
-              <tbody>
-                {ITEMS.map((it) => {
-                  const on = it.id === sel;
-                  const pct = Math.round((it.withReason / it.samples) * 100);
-                  return (
+          <div className="space-y-4">
+            {/* 항목군 표 */}
+            <Card
+              title="항목군별 대장"
+              tag={
+                <span className="text-[11px] text-[var(--ink-3)]">
+                  행을 누르면 오른쪽에 층화 분포가 펼쳐집니다
+                </span>
+              }
+            >
+              <table className="w-full text-left text-[12.5px]">
+                <thead>
+                  <tr className="border-b border-[var(--rule-2)] text-[11px] text-[var(--ink-3)]">
+                    <th className="pb-1.5 font-semibold">본부 · 항목</th>
+                    <th className="pb-1.5 text-center font-semibold">표본</th>
+                    <th className="pb-1.5 text-center font-semibold">
+                      값의 가짓수
+                    </th>
+                    <th className="pb-1.5 font-semibold">사유 부착률</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {ITEMS.map((it) => {
+                    const on = it.id === sel;
+                    const pct = Math.round((it.withReason / it.samples) * 100);
+                    return (
+                      <tr
+                        key={it.id}
+                        onClick={() => setSel(it.id)}
+                        className={[
+                          "cursor-pointer border-b border-dashed border-[var(--rule)] last:border-0",
+                          on ? "bg-[var(--sign-bg)]" : "hover:bg-[#faf9f5]",
+                        ].join(" ")}
+                      >
+                        <td className="py-2.5 pr-2">
+                          <span className="flex items-center gap-1.5">
+                            {on ? (
+                              <MousePointerClick
+                                size={13}
+                                className="text-[var(--sign)]"
+                              />
+                            ) : (
+                              <span className="w-[13px]" />
+                            )}
+                            <span className="font-bold">{it.name}</span>
+                            <span className="mono text-[10.5px] text-[var(--ink-3)]">
+                              {it.unit}
+                            </span>
+                          </span>
+                          <span className="mt-0.5 block pl-[19px] text-[11px] text-[var(--ink-3)]">
+                            {it.bureau} · 이형 {it.aliases.length}종
+                          </span>
+                        </td>
+                        <td className="mono py-2.5 text-center text-[var(--ink-2)]">
+                          {it.samples}
+                        </td>
+                        <td className="py-2.5 text-center">
+                          <span
+                            className={[
+                              "mono inline-block min-w-[30px] rounded-[4px] px-1.5 py-[2px] text-[15px] font-bold",
+                              on
+                                ? "bg-[var(--sign)] text-white"
+                                : "bg-[#f0efe9] text-[var(--ink)]",
+                            ].join(" ")}
+                          >
+                            {it.distinct}
+                          </span>
+                        </td>
+                        <td className="py-2.5 pl-2">
+                          <span className="flex items-center gap-1.5">
+                            <span className="relative h-[10px] w-[74px] rounded-[2px] bg-[#f0efe9]">
+                              <span
+                                className="absolute inset-y-0 left-0 rounded-[2px] bg-[var(--rule-c)]"
+                                style={{ width: `${pct}%` }}
+                              />
+                            </span>
+                            <span className="mono text-[11.5px] text-[var(--ink-2)]">
+                              {it.withReason}/{it.samples}
+                            </span>
+                          </span>
+                          <span className="mt-0.5 block text-[10.5px] text-[var(--unknown)]">
+                            근거 미상 {it.samples - it.withReason}건
+                          </span>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+              <p className="mt-2.5 text-[11.5px] leading-relaxed text-[var(--ink-3)]">
+                값의 분산 축소는 목표로 걸지 않습니다. 값이 다른 데에는 프로젝트
+                조건이 다르다는 정당한 이유가 있을 수 있고, 분산을 목표로 삼는
+                순간 중앙값으로 수렴하라는 압력이 생깁니다.
+              </p>
+            </Card>
+
+            <Card title="가장 가까운 것들과의 거리">
+              <table className="w-full text-left text-[12px]">
+                <thead>
+                  <tr className="border-b border-[var(--rule-2)] text-[11px] text-[var(--ink-3)]">
+                    <th className="w-[27%] pb-1.5 font-semibold">
+                      가장 가까운 것
+                    </th>
+                    <th className="w-[36%] pb-1.5 font-semibold">
+                      그들이 세는 것
+                    </th>
+                    <th className="pb-1.5 font-semibold">이 대장이 세는 것</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {[
+                    {
+                      a: "EUC · 스프레드시트 거버넌스 도구",
+                      b: "어떤 파일이 있고 무엇이 언제 바뀌었는가",
+                      c: "그 파일 안의 한 숫자가 무엇이며 왜 그 값인가",
+                    },
+                    {
+                      a: "엑셀 위험 점검 도구",
+                      b: "하드코딩된 값이 있다는 사실을 위험으로 표시",
+                      c: "그 값의 의미와 사유를 남겨 위험이 아니게 만든다",
+                    },
+                    {
+                      a: "통합문서 안에서 답하는 AI 보조",
+                      b: "지금 열려 있는 파일을 본다",
+                      c: "회사 전체를 가로질러 같은 항목의 값을 센다",
+                    },
+                  ].map((r) => (
                     <tr
-                      key={it.id}
-                      onClick={() => setSel(it.id)}
-                      className={[
-                        "cursor-pointer border-b border-dashed border-[var(--rule)] last:border-0",
-                        on ? "bg-[var(--sign-bg)]" : "hover:bg-[#faf9f5]",
-                      ].join(" ")}
+                      key={r.a}
+                      className="border-b border-dashed border-[var(--rule)] align-top last:border-0"
                     >
-                      <td className="py-2.5 pr-2">
-                        <span className="flex items-center gap-1.5">
-                          {on ? (
-                            <MousePointerClick
-                              size={13}
-                              className="text-[var(--sign)]"
-                            />
-                          ) : (
-                            <span className="w-[13px]" />
-                          )}
-                          <span className="font-bold">{it.name}</span>
-                          <span className="mono text-[10.5px] text-[var(--ink-3)]">
-                            {it.unit}
-                          </span>
-                        </span>
-                        <span className="mt-0.5 block pl-[19px] text-[11px] text-[var(--ink-3)]">
-                          {it.bureau} · 이형 {it.aliases.length}종
-                        </span>
+                      <td className="py-2 pr-2 font-semibold leading-snug">
+                        {r.a}
                       </td>
-                      <td className="mono py-2.5 text-center text-[var(--ink-2)]">
-                        {it.samples}
+                      <td className="py-2 pr-2 leading-snug text-[var(--ink-2)]">
+                        {r.b}
                       </td>
-                      <td className="py-2.5 text-center">
-                        <span
-                          className={[
-                            "mono inline-block min-w-[30px] rounded-[4px] px-1.5 py-[2px] text-[15px] font-bold",
-                            on
-                              ? "bg-[var(--sign)] text-white"
-                              : "bg-[#f0efe9] text-[var(--ink)]",
-                          ].join(" ")}
-                        >
-                          {it.distinct}
-                        </span>
-                      </td>
-                      <td className="py-2.5 pl-2">
-                        <span className="flex items-center gap-1.5">
-                          <span className="relative h-[10px] w-[74px] rounded-[2px] bg-[#f0efe9]">
-                            <span
-                              className="absolute inset-y-0 left-0 rounded-[2px] bg-[var(--rule-c)]"
-                              style={{ width: `${pct}%` }}
-                            />
-                          </span>
-                          <span className="mono text-[11.5px] text-[var(--ink-2)]">
-                            {it.withReason}/{it.samples}
-                          </span>
-                        </span>
-                        <span className="mt-0.5 block text-[10.5px] text-[var(--unknown)]">
-                          근거 미상 {it.samples - it.withReason}건
-                        </span>
+                      <td className="py-2 leading-snug text-[var(--ink)]">
+                        {r.c}
                       </td>
                     </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-            <p className="mt-2.5 text-[11.5px] leading-relaxed text-[var(--ink-3)]">
-              값의 분산 축소는 목표로 걸지 않습니다. 값이 다른 데에는 프로젝트
-              조건이 다르다는 정당한 이유가 있을 수 있고, 분산을 목표로 삼는
-              순간 중앙값으로 수렴하라는 압력이 생깁니다.
-            </p>
-          </Card>
+                  ))}
+                </tbody>
+              </table>
+              <p className="mt-2 text-[11.5px] leading-relaxed text-[var(--ink-3)]">
+                항목명 · 단위 · 정의 · 표 구조가 전부 달라 같은 항목인지
+                판정하는 일이 남습니다. 그 판정이 이 제안이 AI를 쓰는
+                이유입니다.
+              </p>
+            </Card>
+          </div>
 
           {/* 층화 분포 + 사유 원문 */}
           <div className="space-y-4">

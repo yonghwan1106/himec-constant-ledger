@@ -201,14 +201,33 @@ export default function PanelScreen() {
                     </Link>
                   </div>
                   <p className="mt-1.5 text-[11.5px] leading-snug text-[var(--ink)]">
-                    이 도구가 낼 수 있는 답은 <b>근거 미상 하나</b>입니다. 사유를
-                    만들어 내지 않습니다. 대신 이 라벨이 붙은 도구는 그 순간{" "}
-                    <b>소유자와 재검증 기한이 지정되는 대상</b>이 됩니다 — 지금은
-                    그 라벨조차 붙지 않아 아무도 그 시트를 회수하지 않습니다.
+                    이 도구가 낼 수 있는 답은 <b>근거 미상 하나</b>입니다.
+                    사유를 만들어 내지 않습니다. 대신 이 라벨이 붙은 도구는 그
+                    순간 <b>소유자와 재검증 기한이 지정되는 대상</b>이 됩니다 —
+                    지금은 그 라벨조차 붙지 않아 아무도 그 시트를 회수하지
+                    않습니다.
                   </p>
                 </div>
               </div>
             </div>
+          </Card>
+
+          <Card title="왜 검색이 아니라 입력 순간인가">
+            <ul className="space-y-1.5 text-[12.5px] leading-relaxed text-[var(--ink)]">
+              <li>
+                <b>검색어가 없습니다.</b> 지식을 연결해 찾아가게 하는 것이
+                아니라, 값을 넣는 자리에 그 값의 이력이 나타납니다.
+              </li>
+              <li>
+                <b>대시보드는 보러 가야 합니다.</b> 이 패널은 오지 않는 사람에게
+                먼저 나타납니다. 바쁜 날 건너뛰지 않도록 입력은 한 줄로
+                끝냅니다.
+              </li>
+              <li>
+                <b>기존 도구를 밀어내지 않습니다.</b> 익숙한 엑셀 수식 툴 옆에
+                붙는 좁은 패널이고, 계산 자체에는 손대지 않습니다.
+              </li>
+            </ul>
           </Card>
         </div>
 
@@ -263,8 +282,9 @@ export default function PanelScreen() {
               <div className="mt-2 rounded-[4px] bg-white px-2 py-2">
                 {st.hidden ? (
                   <p className="text-[12px] leading-relaxed text-[var(--unknown)]">
-                    표본 {st.n}건 — <b>5건 미만이므로 분포를 표시하지 않습니다.</b>{" "}
-                    원문 링크만 제공합니다.
+                    표본 {st.n}건 —{" "}
+                    <b>5건 미만이므로 분포를 표시하지 않습니다.</b> 원문 링크만
+                    제공합니다.
                   </p>
                 ) : (
                   <>
@@ -371,7 +391,8 @@ export default function PanelScreen() {
               ) : null}
               {unknown ? (
                 <p className="mt-1.5 rounded-[4px] bg-[var(--unknown-bg)] px-2 py-1 text-[11.5px] font-semibold text-[var(--unknown)]">
-                  「근거 미상」으로 남았습니다 · 결재 화면의 항목 수에 더해집니다
+                  「근거 미상」으로 남았습니다 · 결재 화면의 항목 수에
+                  더해집니다
                 </p>
               ) : null}
             </div>
