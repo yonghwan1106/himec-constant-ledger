@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -42,6 +43,15 @@ function Legend() {
 export default function Chrome({ children }: { children: React.ReactNode }) {
   const path = usePathname();
   const sheet = SHEETS.find((s) => s.href === path) ?? SHEETS[0];
+
+  // 캡처용 인쇄 모드 — ?print=1 이면 시트 탭을 문서 끝에 한 번만 정적으로 둔다.
+  // 일반 방문에는 아무 변화가 없다.
+  useEffect(() => {
+    const on = new URLSearchParams(window.location.search).has("print");
+    const root = document.documentElement;
+    if (on) root.setAttribute("data-print", "1");
+    else root.removeAttribute("data-print");
+  }, [path]);
 
   return (
     <div className="flex min-h-screen flex-col">
