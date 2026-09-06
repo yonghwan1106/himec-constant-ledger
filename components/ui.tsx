@@ -1,96 +1,87 @@
 import type { ReactNode } from "react";
 
-export function PageHead({
-  n,
+/** 시트 머리 — 눈썹 라벨 없이 제목과 리드만 */
+export function SheetHead({
   title,
   lead,
-  right,
+  marks,
 }: {
-  n: string;
   title: string;
   lead: string;
-  right?: ReactNode;
+  marks?: ReactNode;
 }) {
   return (
-    <div className="border-b border-[var(--rule)] bg-[#fbfaf7] px-7 py-5">
-      <div className="flex items-start gap-4">
-        <div>
-          <p className="mono text-[11.5px] font-bold tracking-wider text-[var(--ink-3)]">
-            화면 {n}
-          </p>
-          <h1 className="mt-1 text-[21px] font-bold leading-tight text-[var(--ink)]">
-            {title}
-          </h1>
-          <p className="mt-1.5 max-w-[860px] text-[13px] leading-relaxed text-[var(--ink-2)]">
-            {lead}
-          </p>
-        </div>
-        {right ? <div className="ml-auto shrink-0">{right}</div> : null}
-      </div>
+    <div className="pt-7">
+      <h1 className="max-w-[900px] text-[30px] leading-[1.28] font-semibold tracking-[-0.02em]">
+        {title}
+      </h1>
+      <p className="mt-2.5 max-w-[680px] text-[15px] leading-[1.65] text-[var(--pencil)]">
+        {lead}
+      </p>
+      {marks ? <div className="mt-3 flex flex-wrap gap-1.5">{marks}</div> : null}
     </div>
   );
 }
 
-export function Card({
+/** 구획 — 카드가 아니라 잉크 가로선 + 소제목 */
+export function Section({
   title,
-  tag,
+  note,
+  marks,
   children,
   className = "",
-  foot,
 }: {
-  title?: ReactNode;
-  tag?: ReactNode;
+  title?: string;
+  note?: ReactNode;
+  marks?: ReactNode;
   children: ReactNode;
   className?: string;
-  foot?: ReactNode;
 }) {
   return (
-    <section
-      className={
-        "rounded-lg border border-[var(--rule)] bg-white shadow-[0_1px_2px_rgba(23,24,26,0.04)] " +
-        className
-      }
-    >
+    <section className={"pt-7 " + className}>
       {title ? (
-        <header className="flex items-center gap-2 border-b border-[var(--rule)] px-4 py-2.5">
-          <h2 className="text-[13.5px] font-bold text-[var(--ink)]">{title}</h2>
-          {tag ? <div className="ml-auto">{tag}</div> : null}
-        </header>
+        <div className="border-t border-[var(--ink)] pt-2.5">
+          <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1.5">
+            <h2 className="text-[19px] leading-snug font-semibold">{title}</h2>
+            {marks ? (
+              <span className="flex flex-wrap gap-1.5">{marks}</span>
+            ) : null}
+          </div>
+          {note ? (
+            <p className="mt-1 text-[12px] text-[var(--pencil)]">{note}</p>
+          ) : null}
+        </div>
       ) : null}
-      <div className="px-4 py-3.5">{children}</div>
-      {foot ? (
-        <footer className="border-t border-[var(--rule)] bg-[#fbfaf7] px-4 py-2.5 text-[12px] text-[var(--ink-2)]">
-          {foot}
-        </footer>
-      ) : null}
+      <div className={title ? "mt-3.5" : ""}>{children}</div>
     </section>
   );
 }
 
-type Kind = "ai" | "rule" | "unknown" | "sign" | "plain";
+/** 재료 칩 — 연필(AI) / 잉크(규칙) / 인주(서명) / 형광펜(근거 미상) */
+export type ChipKind = "pencil" | "ink" | "stamp" | "marker";
 
-const KIND: Record<Kind, string> = {
-  ai: "border-[#d3c2ee] bg-[var(--ai-bg)] text-[var(--ai)]",
-  rule: "border-[#b9d9d5] bg-[var(--rule-bg)] text-[var(--rule-c)]",
-  unknown: "border-[#e8c68a] bg-[var(--unknown-bg)] text-[var(--unknown)]",
-  sign: "border-[#bccee4] bg-[var(--sign-bg)] text-[var(--sign)]",
-  plain: "border-[var(--rule-2)] bg-[#f2f1ec] text-[var(--ink-2)]",
+const CHIP: Record<ChipKind, string> = {
+  pencil:
+    "border-[1.5px] border-dashed border-[var(--pencil)] text-[var(--pencil)]",
+  ink: "border border-[var(--ink)] text-[var(--ink)]",
+  stamp: "border border-[var(--stamp)] text-[var(--stamp)]",
+  marker: "border border-[var(--marker)] bg-[var(--marker)] text-[var(--ink)]",
 };
 
-export function Badge({
-  kind = "plain",
+export function Chip({
+  kind = "ink",
   children,
   mono = false,
 }: {
-  kind?: Kind;
+  kind?: ChipKind;
   children: ReactNode;
   mono?: boolean;
 }) {
   return (
     <span
       className={[
-        "inline-flex items-center gap-1 rounded-[4px] border px-1.5 py-[2px] text-[11px] font-semibold whitespace-nowrap",
-        KIND[kind],
+        "inline-flex items-center gap-1 px-[7px] py-[1px] text-[12px] leading-[1.5] font-semibold whitespace-nowrap",
+        CHIP[kind],
         mono ? "mono" : "",
       ].join(" ")}
     >
@@ -99,7 +90,7 @@ export function Badge({
   );
 }
 
-/** 가로 막대 분포 — 외부 차트 라이브러리 없이 CSS로 그린다 */
+/** 분포 막대 — 잉크 단색. 강조는 두께와 잉크, 비강조는 옅은 잉크 톤 */
 export function DistBar({
   buckets,
   highlight,
@@ -111,35 +102,36 @@ export function DistBar({
 }) {
   const m = max ?? Math.max(...buckets.map((b) => b.count), 1);
   return (
-    <ul className="space-y-[3px]">
+    <ul>
       {buckets.map((b) => {
         const on = b.value === highlight;
         return (
-          <li key={b.value} className="flex items-center gap-2">
+          <li key={b.value} className="flex items-center gap-2 py-[3px]">
             <span
               className={[
-                "mono w-[46px] shrink-0 text-right text-[12px]",
-                on ? "font-bold text-[var(--sign)]" : "text-[var(--ink-2)]",
+                "mono w-[42px] shrink-0 text-right text-[12px]",
+                on ? "font-semibold text-[var(--ink)]" : "text-[var(--pencil)]",
               ].join(" ")}
             >
               {b.value}
             </span>
-            <span className="relative h-[13px] flex-1 rounded-[2px] bg-[#f0efe9]">
+            <span className="relative h-[13px] flex-1 border-b border-[var(--grid)]">
               <span
-                className={[
-                  "absolute inset-y-0 left-0 rounded-[2px]",
-                  on ? "bg-[var(--sign)]" : "bg-[#9fb4c9]",
-                ].join(" ")}
-                style={{ width: `${(b.count / m) * 100}%` }}
+                className="absolute bottom-0 left-0 block"
+                style={{
+                  width: `${(b.count / m) * 100}%`,
+                  height: on ? 12 : 7,
+                  background: on ? "var(--ink)" : "var(--ink-soft)",
+                }}
               />
             </span>
             <span
               className={[
-                "mono w-[30px] shrink-0 text-[11.5px]",
-                on ? "font-bold text-[var(--sign)]" : "text-[var(--ink-3)]",
+                "mono w-[30px] shrink-0 text-right text-[12px]",
+                on ? "font-semibold text-[var(--ink)]" : "text-[var(--pencil)]",
               ].join(" ")}
             >
-              {b.count}건
+              {b.count}
             </span>
           </li>
         );
@@ -148,6 +140,7 @@ export function DistBar({
   );
 }
 
+/** 서식의 항목 줄 — 세로선 격자색, 가로선 잉크 */
 export function KeyVal({
   k,
   v,
@@ -158,13 +151,13 @@ export function KeyVal({
   mono?: boolean;
 }) {
   return (
-    <div className="flex gap-2 border-b border-dashed border-[var(--rule)] py-[5px] last:border-0">
-      <span className="w-[86px] shrink-0 text-[12px] text-[var(--ink-3)]">
+    <div className="flex gap-3 border-b border-[var(--hair)] py-[6px] last:border-0">
+      <span className="w-[92px] shrink-0 border-r border-[var(--grid)] pr-3 text-[12px] text-[var(--pencil)]">
         {k}
       </span>
       <span
         className={[
-          "flex-1 text-[12.5px] leading-relaxed text-[var(--ink)]",
+          "min-w-0 flex-1 text-[13px] leading-[1.55]",
           mono ? "mono" : "",
         ].join(" ")}
       >
@@ -174,10 +167,16 @@ export function KeyVal({
   );
 }
 
+/** 시트 바닥의 주석 */
 export function Foot({ children }: { children: ReactNode }) {
   return (
-    <p className="px-7 pb-8 pt-1 text-[11.5px] leading-relaxed text-[var(--ink-3)]">
+    <p className="mt-8 border-t border-[var(--hair-2)] pt-2.5 text-[12px] leading-[1.6] text-[var(--pencil)]">
       {children}
     </p>
   );
+}
+
+/** 「근거 미상」 — 형광펜으로만 표시한다 */
+export function Unknown({ children = "근거 미상" }: { children?: ReactNode }) {
+  return <Chip kind="marker">{children}</Chip>;
 }

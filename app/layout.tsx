@@ -1,6 +1,23 @@
 import type { Metadata } from "next";
+import { IBM_Plex_Sans_KR, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import Chrome from "@/components/Chrome";
+
+const plexSans = IBM_Plex_Sans_KR({
+  weight: ["400", "600"],
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-plex-sans",
+  fallback: ["system-ui", "Segoe UI", "Malgun Gothic", "sans-serif"],
+});
+
+const plexMono = IBM_Plex_Mono({
+  weight: ["400", "600"],
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-plex-mono",
+  fallback: ["ui-monospace", "Consolas", "monospace"],
+});
 
 export const metadata: Metadata = {
   title: "사내 상수 분포 대장 — HIMEC AI 활용 아이디어 공모전 출품작 목업",
@@ -14,7 +31,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ko" className="h-full antialiased">
+    <html
+      lang="ko"
+      className={`${plexSans.variable} ${plexMono.variable} h-full`}
+    >
       <body className="min-h-full">
         <Chrome>{children}</Chrome>
       </body>

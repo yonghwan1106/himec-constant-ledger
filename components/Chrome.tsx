@@ -2,122 +2,97 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-  LayoutList,
-  PanelRightOpen,
-  Table2,
-  Wrench,
-  Stamp,
-  TriangleAlert,
-} from "lucide-react";
 
-const NAV = [
-  { href: "/", n: "0", label: "개요 · 흐름", sub: "문제 장면과 구간 경계", icon: LayoutList },
-  { href: "/panel", n: "1", label: "입력 순간 패널", sub: "값 옆에 남는 한 줄", icon: PanelRightOpen },
-  { href: "/ledger", n: "2", label: "상수 분포 대장", sub: "가짓수와 층화 분포", icon: Table2 },
-  { href: "/tools", n: "3", label: "도구 근거표", sub: "소유자와 재검증 기한", icon: Wrench },
-  { href: "/approval", n: "4", label: "결재 · 출처표", sub: "근거 미상 항목 수", icon: Stamp },
+const SHEETS = [
+  { href: "/", n: "0", label: "개요" },
+  { href: "/panel", n: "1", label: "입력 순간" },
+  { href: "/ledger", n: "2", label: "분포 대장" },
+  { href: "/tools", n: "3", label: "도구 근거표" },
+  { href: "/approval", n: "4", label: "결재" },
 ];
+
+function Legend() {
+  return (
+    <div className="flex flex-wrap items-center gap-y-1 pt-2 text-[12px] leading-tight text-[var(--pencil)]">
+      <span className="flex items-center gap-2 pr-4">
+        <span
+          aria-hidden
+          className="inline-block h-0 w-6 border-t-[1.5px] border-dashed border-[var(--pencil)]"
+        />
+        연필 = AI 구간, 추정하고 제시만 한다
+      </span>
+      <span className="flex items-center gap-2 border-l border-[var(--grid)] px-4">
+        <span
+          aria-hidden
+          className="inline-block h-0 w-6 border-t border-[var(--ink)]"
+        />
+        <span className="text-[var(--ink)]">잉크 = 규칙 구간, 결정론 계산</span>
+      </span>
+      <span className="flex items-center gap-2 border-l border-[var(--grid)] pl-4">
+        <span
+          aria-hidden
+          className="inline-block h-[9px] w-[9px] rounded-full border-[1.5px] border-[var(--stamp)]"
+        />
+        <span className="text-[var(--stamp)]">인주 = 사람의 서명</span>
+      </span>
+    </div>
+  );
+}
 
 export default function Chrome({ children }: { children: React.ReactNode }) {
   const path = usePathname();
+  const sheet = SHEETS.find((s) => s.href === path) ?? SHEETS[0];
 
   return (
-    <div className="min-h-screen">
-      {/* 공모전 머리띠 */}
-      <header className="sticky top-0 z-30 border-b border-[var(--rule-2)] bg-[#17181a] text-[#f3f2ee]">
-        <div className="flex h-11 items-center gap-3 px-5">
-          <span className="text-[12.5px] font-semibold tracking-tight">
-            제1회 HIMEC AI 활용 아이디어 공모전 출품작 목업
-          </span>
-          <span className="text-[12px] text-[#a7a9a4]">제안자 박용환</span>
-          <span className="hidden text-[12px] text-[#a7a9a4] lg:inline">
-            · 「우리 회사는 그 숫자를 몇 가지로 쓰고 있습니까」
-          </span>
-          <span className="ml-auto inline-flex items-center gap-1.5 rounded-sm border border-[#b98a3a] bg-[#3a2f16] px-2 py-[3px] text-[11.5px] font-semibold text-[#f0c975]">
-            <TriangleAlert size={13} strokeWidth={2.2} />
-            가상 데이터 — 실제 프로젝트·실적이 아닙니다
-          </span>
+    <div className="flex min-h-screen flex-col">
+      {/* 표제란 — 도면·계산서의 title block */}
+      <header className="pt-5">
+        <div className="sheetwrap">
+          <div className="tb">
+            <div className="tb-cell">
+              제1회 HIMEC AI 활용 아이디어 공모전 출품작 목업
+            </div>
+            <div className="tb-cell">
+              시트 <span className="mono">{sheet.n}</span> {sheet.label}
+            </div>
+            <div className="tb-cell">작성 박용환</div>
+            <div className="tb-cell">
+              가상 데이터 — 실제 프로젝트·실적이 아닙니다
+            </div>
+          </div>
+          <Legend />
         </div>
       </header>
 
-      <div className="flex">
-        {/* 좌측 화면 목록 */}
-        <nav className="sticky top-11 hidden h-[calc(100vh-2.75rem)] w-[232px] shrink-0 border-r border-[var(--rule)] bg-[#efeee9] px-3 py-4 md:block">
-          <p className="px-2 pb-2 text-[11px] font-semibold tracking-wide text-[var(--ink-3)]">
-            화면 5종
-          </p>
-          <ul className="space-y-1">
-            {NAV.map((it) => {
-              const on = path === it.href;
-              const Icon = it.icon;
+      <main className="flex-1 pb-24">
+        <div className="sheetwrap">{children}</div>
+      </main>
+
+      {/* 시트 탭 */}
+      <nav
+        aria-label="시트"
+        className="fixed inset-x-0 bottom-0 z-40 border-t border-[var(--ink)] bg-[var(--pad)]"
+      >
+        <div className="sheetwrap">
+          <ul className="flex overflow-x-auto">
+            {SHEETS.map((s) => {
+              const on = s.href === path;
               return (
-                <li key={it.href}>
+                <li key={s.href} className="shrink-0">
                   <Link
-                    href={it.href}
-                    className={[
-                      "block rounded-md border px-2.5 py-2 transition-colors",
-                      on
-                        ? "border-[var(--rule-2)] bg-white shadow-[0_1px_0_rgba(0,0,0,0.04)]"
-                        : "border-transparent hover:bg-white/60",
-                    ].join(" ")}
+                    href={s.href}
+                    aria-current={on ? "page" : undefined}
+                    className={on ? "tab tab-on" : "tab"}
                   >
-                    <span className="flex items-center gap-2">
-                      <span
-                        className={[
-                          "mono flex h-[18px] w-[18px] items-center justify-center rounded-[3px] text-[11px] font-bold",
-                          on
-                            ? "bg-[var(--sign)] text-white"
-                            : "bg-[var(--rule-2)] text-[#4a4d52]",
-                        ].join(" ")}
-                      >
-                        {it.n}
-                      </span>
-                      <span className="text-[13px] font-semibold text-[var(--ink)]">
-                        {it.label}
-                      </span>
-                      <Icon
-                        size={14}
-                        className="ml-auto text-[var(--ink-3)]"
-                        strokeWidth={1.8}
-                      />
-                    </span>
-                    <span className="mt-0.5 block pl-[26px] text-[11.5px] text-[var(--ink-3)]">
-                      {it.sub}
-                    </span>
+                    <span className="mono text-[11px]">{s.n}</span>
+                    {s.label}
                   </Link>
                 </li>
               );
             })}
           </ul>
-
-          <div className="mt-5 rounded-md border border-[var(--rule)] bg-white/70 px-2.5 py-2.5">
-            <p className="text-[11px] font-semibold text-[var(--ink-2)]">
-              구간 표시 규칙
-            </p>
-            <p className="mt-1.5 flex items-center gap-1.5 text-[11.5px] text-[var(--ink-2)]">
-              <span className="inline-block h-2.5 w-2.5 rounded-[2px] bg-[var(--ai)]" />
-              AI 구간 — 추정하고 제시만 한다
-            </p>
-            <p className="mt-1 flex items-center gap-1.5 text-[11.5px] text-[var(--ink-2)]">
-              <span className="inline-block h-2.5 w-2.5 rounded-[2px] bg-[var(--rule-c)]" />
-              규칙 구간 — 결정론 계산이다
-            </p>
-            <p className="mt-1 flex items-center gap-1.5 text-[11.5px] text-[var(--ink-2)]">
-              <span className="inline-block h-2.5 w-2.5 rounded-[2px] bg-[var(--unknown)]" />
-              「근거 미상」 — 만들어 내지 않는다
-            </p>
-          </div>
-
-          <p className="mt-4 px-2 text-[11px] leading-relaxed text-[var(--ink-3)]">
-            AI는 값을 제안하지 않습니다.
-            <br />
-            최종 판정과 서명은 계산서 책임기술사입니다.
-          </p>
-        </nav>
-
-        <main className="min-w-0 flex-1">{children}</main>
-      </div>
+        </div>
+      </nav>
     </div>
   );
 }
