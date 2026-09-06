@@ -77,7 +77,7 @@ export default function Overview() {
 
       <div className="space-y-4 px-7 py-5">
         {/* 현안 장면 */}
-        <div className="grid gap-4 xl:grid-cols-[1.35fr_1fr]">
+        <div className="grid items-start gap-4 xl:grid-cols-[1.35fr_1fr]">
           <Card title="현안 — 15년 된 시트의 J열에 박힌 ×1.15">
             <p className="text-[13px] leading-[1.75] text-[var(--ink)]">
               입사 3년차가 사무실 부하계산서를 씁니다. 선배가 물려준 시트에는
@@ -136,7 +136,7 @@ export default function Overview() {
                   </tbody>
                 </table>
                 <p className="mt-1.5 text-[11.5px] text-[var(--unknown)]">
-                  ⌜J14⌟ 셀 주석 없음 · 라벨 없음 · 최초 작성자 확인 필요
+                  「J14」 셀 주석 없음 · 라벨 없음 · 최초 작성자 확인 필요
                 </p>
               </div>
             </div>

@@ -1,36 +1,124 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 사내 상수 분포 대장 — 웹 목업
 
-## Getting Started
+「우리 회사는 그 숫자를 몇 가지로 쓰고 있습니까」
+— 사내 상수의 분포와 근거, 그리고 값 옆에 남는 한 줄
 
-First, run the development server:
+**제1회 HIMEC AI 활용 아이디어 공모전 출품작(③ 업무 혁신 · 공통)의 첨부 목업**입니다.
+제안자 : 박용환 (크리에이티브 넥서스)
+
+> ⚠️ **이 저장소의 모든 프로젝트명 · 파일명 · 도구명 · 수치는 가상 데이터입니다.**
+> 실제 기업의 실적 · 보유 도구 · 사내 값이 아니며, 화면 흐름을 보이기 위해 지어낸 예시입니다.
+> 서버도 데이터베이스도 없고, 실제 계산서 파일을 읽지 않습니다. 정적 페이지만으로 동작합니다.
+
+---
+
+## 1. 무엇을 보이는 목업인가
+
+부하계산서 · 각종부하계산서 · 수리계산서 같은 사내 계산서의 **입력 상수**에 대해
+
+1. 회사가 같은 항목에 **몇 가지 값**을 쓰고 있는지 세고,
+2. 각 값을 고른 **사유 한 줄**을 값과 같은 자리에 남기며,
+3. 사유를 찾지 못하면 **「근거 미상」** 라벨을 그대로 남기는
+
+흐름을 4개의 실제 업무 화면으로 보입니다.
+
+**이 제안은 계산서를 만들지 않고, AI가 값을 제안하지도 않습니다.**
+최종 판정과 서명은 지금과 똑같이 계산서 책임기술사입니다.
+
+## 2. 화면 5종
+
+| # | 경로 | 화면 | 무엇을 보이나 |
+|---|---|---|---|
+| 0 | `/` | 개요 · 흐름 | 현안 장면(J열의 ×1.15), 세 본부 공통 구조, 입력 → AI 구간 · 규칙 구간 → 판정 · 서명 → 대장 흐름도, 검증 설계 · 로드맵 · 운영 규정 |
+| 1 | `/panel` | 입력 순간 패널 | 계산 시트 옆에 뜨는 좁은 패널 — 층화 분포, 이 값을 쓴 건들의 사유, 조합 출현 빈도, 「사유 한 줄 남기기」. 이름 없는 숫자(×1.15)에 대한 AI 의미 추정 카드 |
+| 2 | `/ledger` | 사내 상수 분포 대장 | 항목군별 **값의 가짓수(정수)** 와 사유 부착률, 층화 분포, 값을 누르면 펼쳐지는 사유 문장 원문과 파일 · 시트 · 셀 좌표 |
+| 3 | `/tools` | 도구 근거표 | 사내 계산 도구에 박혀 있는 상수, 추정 의미와 확신 수준, 소유자와 재검증 기한, 「도구 근거표」 1쪽 서식(안) |
+| 4 | `/approval` | 결재 · 출처표 | 결재 화면의 **「근거 미상 항목 수」**(차단하지 않음), 「입력값 출처표」 1쪽, 지표 2개 |
+
+## 3. 아키텍처 — AI 구간과 규칙 구간의 경계
+
+화면 전체에서 보라색은 AI 구간, 청록색은 규칙 구간입니다. 색이 곧 책임의 경계입니다.
+
+### AI 구간 — 둘뿐입니다
+
+| 구간 | 입력 | 어떤 판정을 하나 | 왜 이 구간인가 |
+|---|---|---|---|
+| **AI ①** 이름 없는 숫자의 의미 추정 | 셀 라벨, 주변 수식, 변수명, 시트 문맥, 코드 주석 | 물리량 후보와 **확신 수준**을 제시 | 이름이 붙어 있지 않은 숫자에는 매칭할 문자열이 남아 있지 않다 |
+| **AI ②** 값과 사유의 짝 짓기 | 값 옆 비고 · 셀 메모, 같은 프로젝트의 설계기준서 · 발주처 지침 문장 | 사유 문장을 찾아 값에 붙이고, 찾지 못하면 **「근거 미상」**으로 남긴다 | 사유는 자유 문장이고 위치가 정해져 있지 않다 |
+
+### 규칙 구간 — 나머지 전부
+
+| 구간 | 하는 일 |
+|---|---|
+| **규칙 ①** 항목 이형 사전 | 동시사용률 / 부하율 / 이용률 / diversity 를 같은 항목으로 묶거나 분리. **규칙임을 인정하고**, 각 본부 기술사가 직접 편집한다 |
+| **규칙 ②** 분포 · 층화 · 표본 수 | 용도 · 연면적 구간 · 발주처 지침 계통별 층화. **층 안 표본이 5건 미만이면 분포를 표시하지 않고 원문 링크만 준다** |
+| **규칙 ③** 조합 출현 빈도 | 회사 분포에서 드문 조합을 표시한다. 묻기만 하고 막지 않는다 |
+| **규칙 ④** 서식 출력 · 결재 표시 | 「입력값 출처표」 출력, 결재 화면 「근거 미상 항목 수」 표시 |
+
+### 넘지 않는 선
+
+- 값을 **제안하지 않습니다**. 화면 어디에도 “이 값을 쓰십시오”가 없습니다.
+- 결재를 **차단하지 않습니다**. 근거 미상이 남아도 진행됩니다.
+- 값의 **적정성을 판정하지 않습니다**. 과거 산출물의 옳고 그름을 다루지 않습니다.
+- **사람을 세지 않습니다**. 대장에는 집계만 남고, 작성자 식별자는 검토조서 첨부본에만 남습니다.
+- 도면 · 발주처 원문 도서 · 해외 코드 원문은 **범위 밖**입니다.
+
+## 4. 검증 설계
+
+- **정답셋** — 각 본부 기술사가 대표 계산서 40건과 도구 30종의 상수를 수기 태깅(약 300~600행)하고, 추출 결과를 칸 단위로 대조합니다.
+- **반대 방향 표본** — 깔끔한 최신 엑셀만 고르면 전건 통과가 나옵니다. 구형 서식 · 단위 혼재 · 해외 프로젝트 · 남의 회사 서식을 일부러 섞습니다.
+- **파일럿** — 1개 본부 · 1개 항목군, 3개월.
+- **1차 산출물** — 분포가 아니라 한 줄. 「이 항목군에서 근거가 기록된 값은 N건 중 M건입니다.」
+- **지표는 둘뿐** — ① 같은 항목에 회사가 쓰고 있는 서로 다른 값의 **가짓수(정수)** ② **사유가 붙은 값의 비율**(월별 추이). 정확도도 분산 축소도 목표로 걸지 않습니다.
+- **오탐 처리** — 잘못 묶인 항목은 기술사가 사전에서 분리하고 그 이력이 남습니다. 의미 추정에는 확신 수준을 함께 표시합니다.
+- **중단 조건** — ① 항목 확정률 미달 시 항목군을 하나로 좁혀 재시작 ② 시트 위치 표준화가 4주 안에 끝나지 않으면 패널을 미루고 대장만 유지 ③ 사유 칸이 무의미 문자열로 채워지면 선택지형으로 전환.
+- **운영 규정** — 대장은 사내 개선 목적에 한해 사용하고, 과거 산출물의 적정성 판단이나 계약 · 분쟁 자료로 쓰지 않습니다.
+
+## 5. 실행
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev     # http://localhost:3000
+npm run build   # 정적 프리렌더
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Next.js 16 (App Router) · TypeScript · Tailwind CSS v4. 서버 액션 · API 라우트 · 외부 통신이 없습니다.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 6. 라이선스 검토표
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 이 목업이 실제로 쓰는 것
 
-## Learn More
+| 구성요소 | 버전 | 라이선스 | 배포 위험 |
+|---|---|---|---|
+| next | 16.x | MIT | 없음 |
+| react / react-dom | 19.x | MIT | 없음 |
+| tailwindcss | 4.x | MIT | 없음 |
+| lucide-react (아이콘) | 1.x | ISC | 없음 |
+| typescript | 5.x | Apache-2.0 | 없음 |
+| eslint / eslint-config-next | 9.x / 16.x | MIT | 없음 |
+| 서체 | — | 시스템 폰트 스택(Pretendard가 설치돼 있으면 우선 사용, OFL) | 외부 폰트 파일을 내려받지 않음 |
+| 도형 · 아이콘 | — | 전부 CSS와 인라인 SVG로 그림 | **외부 이미지 파일 없음** |
 
-To learn more about Next.js, take a look at the following resources:
+### 본 제안의 1단계 구현에서 쓰기로 한 것
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+| 구성요소 | 버전 | 라이선스 | 판단 |
+|---|---|---|---|
+| openpyxl | 3.1.5 | MIT | 채택 — 엑셀 수식 · 셀 주석 · 시트명 판독 |
+| pdfplumber | 0.11.10 | MIT | 채택 — PDF 계산서 표 판독 |
+| pdfminer.six | — | MIT | 채택 — pdfplumber 기반 |
+| PyMuPDF | — | AGPL-3.0 | **배제** — 사내 배포 시 라이선스 위험 |
+| Ultralytics | — | AGPL-3.0 | **배제** — 같은 사유 |
+| layoutlmv3 가중치 | — | cc-by-nc-sa-4.0(비상업) | **배제** — 비상업 조건 |
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+기준 본문이 필요한 경우 국가건설기준센터 · 법제처의 공개 API로 조회하며, 발행처가 AI 도구 입력을 금지한 해외 코드는 인덱싱하지 않고 조항 번호와 서지정보만 참조합니다.
 
-## Deploy on Vercel
+## 7. 가상 데이터 고지
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- 「예시 데이터센터 A · B」, 「예시 오피스 D」, 「예시 반도체 지원동 E」, 「예시 물류센터 C」는 **지어낸 프로젝트명**입니다.
+- `T-01` ~ `T-14` 도구, 파일명, 셀 좌표, 상수, 소유자, 재검증 기한, 분포와 추이 수치는 **전부 가상**입니다.
+- 실제 사내 계산서의 엑셀 · PDF 비율, 사내 개발 도구의 내부 구조, 과거 계산서의 사유 문장 보유율은 **확인 필요**이며, 1단계 보유 현황 실사 과업으로 다룹니다.
+- 이 목업은 어떤 파일도 업로드받지 않고, 어떤 데이터도 저장하지 않습니다.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 8. 저작권
+
+목업 소스 코드와 화면 구성의 저작권은 제안자 박용환에게 있으며, 본 공모전 심사 목적의 열람 · 배포를 허용합니다.

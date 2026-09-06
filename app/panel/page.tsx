@@ -188,21 +188,24 @@ export default function PanelScreen() {
                     </li>
                   ))}
                 </ul>
-                <div className="mt-2.5 flex flex-wrap items-center gap-2 rounded-md border border-[#e8c68a] bg-[var(--unknown-bg)] px-2.5 py-2">
-                  <Badge kind="unknown">
-                    <CircleHelp size={12} /> 확신 낮음 → 기본값 「근거 미상」
-                  </Badge>
-                  <p className="flex-1 text-[11.5px] leading-snug text-[var(--ink)]">
+                <div className="mt-2.5 rounded-md border border-[#e8c68a] bg-[var(--unknown-bg)] px-2.5 py-2">
+                  <div className="flex items-center gap-2">
+                    <Badge kind="unknown">
+                      <CircleHelp size={12} /> 확신 낮음 → 기본값 「근거 미상」
+                    </Badge>
+                    <Link
+                      href="/tools"
+                      className="mono ml-auto rounded-[4px] border border-[var(--unknown)] px-2 py-1 text-[11px] font-bold text-[var(--unknown)]"
+                    >
+                      도구 근거표로 보내기 →
+                    </Link>
+                  </div>
+                  <p className="mt-1.5 text-[11.5px] leading-snug text-[var(--ink)]">
                     이 도구가 낼 수 있는 답은 <b>근거 미상 하나</b>입니다. 사유를
                     만들어 내지 않습니다. 대신 이 라벨이 붙은 도구는 그 순간{" "}
-                    <b>소유자와 재검증 기한이 지정되는 대상</b>이 됩니다.
+                    <b>소유자와 재검증 기한이 지정되는 대상</b>이 됩니다 — 지금은
+                    그 라벨조차 붙지 않아 아무도 그 시트를 회수하지 않습니다.
                   </p>
-                  <Link
-                    href="/tools"
-                    className="mono rounded-[4px] border border-[var(--unknown)] px-2 py-1 text-[11px] font-bold text-[var(--unknown)]"
-                  >
-                    도구 근거표로 보내기 →
-                  </Link>
                 </div>
               </div>
             </div>
