@@ -57,8 +57,8 @@ export default function ToolsScreen() {
             key={c.k}
             className={
               i === 0
-                ? "pr-6"
-                : "border-l border-[var(--grid)] pl-6 xl:pr-6 xl:last:pr-0"
+                ? "sm:pr-6"
+                : "sm:border-l sm:border-[var(--grid)] sm:pl-6 xl:pr-6 xl:last:pr-0"
             }
           >
             <p className="text-[12px] text-[var(--pencil)]">{c.k}</p>
@@ -72,10 +72,10 @@ export default function ToolsScreen() {
         ))}
       </div>
 
-      <div className="grid items-start gap-x-8 gap-y-7 xl:grid-cols-[minmax(0,1.72fr)_minmax(0,1fr)]">
+      <div className="grid items-start gap-x-8 gap-y-7 xl:grid-cols-[minmax(0,1.95fr)_minmax(0,1fr)]">
         <Section title="사내 계산 도구에 박혀 있는 상수">
           <div className="tablewrap">
-            <table className="sheet-table min-w-[760px] text-[12.5px]">
+            <table className="sheet-table w-full min-w-[690px] table-fixed text-[12.5px]">
               <thead>
                 <tr className="text-[12px] text-[var(--pencil)]">
                   <th className="w-[22%]">도구 · 버전</th>

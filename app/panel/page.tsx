@@ -153,11 +153,10 @@ export default function PanelScreen() {
                       </span>
                       <span className="relative h-[11px] flex-1 border-b border-[var(--grid)]">
                         <span
-                          className="absolute bottom-0 left-0 block h-[7px] border-t-[1.5px] border-dashed border-[var(--pencil)]"
+                          className="absolute bottom-0 left-0 block h-[7px]"
                           style={{
                             width: `${c.p}%`,
-                            background:
-                              "repeating-linear-gradient(135deg, rgba(79,90,99,0.28) 0 3px, transparent 3px 6px)",
+                            background: "rgba(79,90,99,0.55)",
                           }}
                         />
                       </span>
@@ -235,7 +234,7 @@ export default function PanelScreen() {
             </span>
             <Chip kind="ink">규칙 ① 이형 사전</Chip>
           </div>
-          <p className="mono mt-1.5 text-[12px] leading-[1.5] text-[var(--pencil)]">
+          <p className="mt-1.5 text-[12px] leading-[1.5] text-[var(--pencil)]">
             {ITEM.aliases.join(", ")} → 같은 물리량으로 묶임
           </p>
 

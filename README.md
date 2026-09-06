@@ -37,7 +37,7 @@
 
 ## 3. 아키텍처 — AI 구간과 규칙 구간의 경계
 
-화면 전체에서 보라색은 AI 구간, 청록색은 규칙 구간입니다. 색이 곧 책임의 경계입니다.
+화면은 색이 아니라 **재료**로 경계를 말합니다. 연필(점선, 회색)은 AI 구간이고 추정해 제시만 합니다. 잉크(실선, 남색)는 규칙 구간이고 결정론 계산입니다. 인주(붉은색)는 사람의 서명과 확인에만 씁니다. 형광펜(노랑)은 「근거 미상」 라벨 전용이고, 흰색은 입력 순간 패널 한 곳에만 씁니다. 지면은 엔지니어링 계산 용지(24px 격자)이고 카드·그림자·둥근 모서리를 쓰지 않으며, 구획은 잉크 가로선과 소제목으로만 나눕니다. 본문·제목은 IBM Plex Sans KR, 수치·수식·셀 좌표에만 IBM Plex Mono를 씁니다.
 
 ### AI 구간 — 둘뿐입니다
 
@@ -93,10 +93,10 @@ Next.js 16 (App Router) · TypeScript · Tailwind CSS v4. 서버 액션 · API �
 | next | 16.x | MIT | 없음 |
 | react / react-dom | 19.x | MIT | 없음 |
 | tailwindcss | 4.x | MIT | 없음 |
-| lucide-react (아이콘) | 1.x | ISC | 없음 |
+| lucide-react | 1.x | ISC | 없음 (v2 인터페이스는 아이콘을 쓰지 않으므로 실제 번들에 포함되지 않음) |
 | typescript | 5.x | Apache-2.0 | 없음 |
 | eslint / eslint-config-next | 9.x / 16.x | MIT | 없음 |
-| 서체 | — | 시스템 폰트 스택(Pretendard가 설치돼 있으면 우선 사용, OFL) | 외부 폰트 파일을 내려받지 않음 |
+| 서체 | IBM Plex Sans KR · IBM Plex Mono | SIL Open Font License 1.1 (OFL) | next/font/google로 빌드 시점에 내려받아 **자체 호스팅** — 실행 시 외부 요청 없음 |
 | 도형 · 아이콘 | — | 전부 CSS와 인라인 SVG로 그림 | **외부 이미지 파일 없음** |
 
 ### 본 제안의 1단계 구현에서 쓰기로 한 것

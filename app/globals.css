@@ -132,6 +132,10 @@ body {
 }
 
 /* ── 표 — 세로선 격자색, 가로선 잉크 ───────────────────────────── */
+main .grid > * {
+  min-width: 0;
+}
+
 .tablewrap {
   overflow-x: auto;
 }
@@ -153,6 +157,7 @@ body {
   border-bottom: 1px solid var(--hair);
   padding: 8px 10px 8px 0;
   vertical-align: top;
+  overflow-wrap: anywhere;
 }
 
 .sheet-table th + th,

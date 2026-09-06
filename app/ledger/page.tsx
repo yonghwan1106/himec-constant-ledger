@@ -52,7 +52,7 @@ export default function LedgerScreen() {
           <span className="mono">{item.withReason}</span>건입니다.
         </p>
         <div className="mt-3.5 flex flex-wrap gap-y-2">
-          <div className="pr-8">
+          <div className="sm:pr-8">
             <p className="text-[12px] text-[var(--pencil)]">
               6개 항목군 값의 가짓수 합
             </p>
@@ -61,7 +61,7 @@ export default function LedgerScreen() {
               <span className="ml-1 text-[13px]">가지</span>
             </p>
           </div>
-          <div className="border-l border-[var(--grid)] pl-8">
+          <div className="sm:border-l sm:border-[var(--grid)] sm:pl-8">
             <p className="text-[12px] text-[var(--pencil)]">
               1단계 태깅 표본 (가상)
             </p>
@@ -123,7 +123,7 @@ export default function LedgerScreen() {
                             >
                               {it.name}
                             </span>
-                            <span className="mono text-[11.5px] text-[var(--pencil)]">
+                            <span className="text-[11.5px] text-[var(--pencil)]">
                               {it.unit}
                             </span>
                           </span>
@@ -216,9 +216,7 @@ export default function LedgerScreen() {
             title={`${item.name} — 층화 분포`}
             marks={<Chip kind="ink">규칙 ② 층화 · 표본 수</Chip>}
             note={
-              <span className="mono">
-                이형 사전 : {item.aliases.join(", ")}
-              </span>
+              <>이형 사전 : {item.aliases.join(", ")}</>
             }
           >
             <div className="grid gap-x-7 gap-y-5 sm:grid-cols-2">
@@ -252,9 +250,9 @@ export default function LedgerScreen() {
           <Section
             title="값을 누르면 — 그 값을 쓴 프로젝트와 사유 문장 원문"
             note={
-              <span className="mono">
-                {item.name} = 0.75 — 4건
-              </span>
+              <>
+                {item.name} = <span className="mono">0.75</span> — 4건
+              </>
             }
           >
             {rows.length === 0 ? (

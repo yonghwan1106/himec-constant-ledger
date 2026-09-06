@@ -257,7 +257,7 @@ export default function Overview() {
       <Section title="지표는 둘뿐입니다">
         <div className="grid gap-x-10 gap-y-5 md:grid-cols-2">
           <div>
-            <p className="mono text-[12px] text-[var(--pencil)]">지표 ①</p>
+            <p className="text-[12px] text-[var(--pencil)]">지표 ①</p>
             <p className="mt-1 text-[19px] leading-snug font-semibold">
               같은 항목에 회사가 쓰는 서로 다른 값의 가짓수
             </p>
@@ -266,7 +266,7 @@ export default function Overview() {
             </p>
           </div>
           <div>
-            <p className="mono text-[12px] text-[var(--pencil)]">지표 ②</p>
+            <p className="text-[12px] text-[var(--pencil)]">지표 ②</p>
             <p className="mt-1 text-[19px] leading-snug font-semibold">
               사유가 붙은 값의 비율 (월별 추이)
             </p>
@@ -305,7 +305,7 @@ export default function Overview() {
             <p className="text-[15px] font-semibold">로드맵 3단계</p>
             <ol className="mt-2 space-y-2.5 text-[13px] leading-[1.65]">
               <li className="flex gap-2.5">
-                <span className="mono shrink-0 border border-[var(--ink)] px-1.5 text-[12px] font-semibold">
+                <span className="mono w-[14px] shrink-0 text-[13px] font-semibold">
                   1
                 </span>
                 <span>
@@ -318,7 +318,7 @@ export default function Overview() {
                 </span>
               </li>
               <li className="flex gap-2.5">
-                <span className="mono shrink-0 border border-[var(--ink)] px-1.5 text-[12px] font-semibold">
+                <span className="mono w-[14px] shrink-0 text-[13px] font-semibold">
                   2
                 </span>
                 <span>
@@ -329,7 +329,7 @@ export default function Overview() {
                 </span>
               </li>
               <li className="flex gap-2.5">
-                <span className="mono shrink-0 border border-[var(--ink)] px-1.5 text-[12px] font-semibold">
+                <span className="mono w-[14px] shrink-0 text-[13px] font-semibold">
                   3
                 </span>
                 <span>
