@@ -9,10 +9,10 @@ const ITEM = ITEMS[0]; // 동시사용률
 const CURRENT = "0.75";
 
 const SHEET_ROWS = [
-  { r: 18, a: "사무 · 기준층", b: "=D8*E18", c: "0.70", d: "3,972 W" },
-  { r: 19, a: "사무 · 기준층", b: "=D8*E19", c: "0.70", d: "4,110 W" },
-  { r: 20, a: "회의 · 기준층", b: "=D8*E20", c: "0.65", d: "2,884 W" },
-  { r: 21, a: "사무 · 지원동", b: "=D8*E21", c: "0.80", d: "5,014 W" },
+  { r: 18, a: "사무 · 기준층", b: "=D8*E18*H18", c: "0.70", d: "3,972 W" },
+  { r: 19, a: "사무 · 기준층", b: "=D8*E19*H19", c: "0.70", d: "4,110 W" },
+  { r: 20, a: "회의 · 기준층", b: "=D8*E20*H20", c: "0.65", d: "2,884 W" },
+  { r: 21, a: "사무 · 지원동", b: "=D8*E21*H21", c: "0.80", d: "5,014 W" },
 ];
 
 const AI_CANDIDATES = [
@@ -91,7 +91,7 @@ export default function PanelScreen() {
                       22
                     </td>
                     <td className="text-[var(--ink)]">사무 · 지원동</td>
-                    <td className="text-[var(--ink)]">=D8*E22</td>
+                    <td className="text-[var(--ink)]">=D8*E22*H22</td>
                     <td>
                       <span className="inline-flex items-baseline gap-2">
                         <span className="border-2 border-[var(--ink)] px-2 py-[1px] font-semibold text-[var(--ink)]">
@@ -107,7 +107,7 @@ export default function PanelScreen() {
                   <tr className="text-[var(--pencil)]">
                     <td className="text-right">23</td>
                     <td>사무 · 지원동</td>
-                    <td>=D8*E23</td>
+                    <td>=D8*E23*H23</td>
                     <td>0.80</td>
                     <td className="text-right">5,102 W</td>
                   </tr>
@@ -194,7 +194,7 @@ export default function PanelScreen() {
           <Section title="왜 검색이 아니라 입력 순간인가">
             <ul className="grid gap-x-8 gap-y-2.5 text-[13px] leading-[1.65] md:grid-cols-3">
               <li>
-                <b className="font-semibold">검색어가 없습니다.</b> 지식을 연결해
+                <b className="font-semibold">검색어를 입력하지 않습니다.</b> 지식을 연결해
                 찾아가게 하는 것이 아니라, 값을 넣는 자리에 그 값의 이력이
                 나타납니다.
               </li>
@@ -269,9 +269,9 @@ export default function PanelScreen() {
                 <p className="text-[13px] leading-[1.6]">
                   표본 <span className="mono">{st.n}</span>건 —{" "}
                   <b className="font-semibold">
-                    5건 미만이므로 분포를 표시하지 않습니다.
+                    5건 미만이므로 분포를 그리지 않습니다.
                   </b>{" "}
-                  원문 링크만 제공합니다.
+                  원문 링크만 목록으로 제시합니다. 패널 자체는 뜹니다.
                 </p>
               ) : (
                 <>
@@ -324,7 +324,7 @@ export default function PanelScreen() {
               ))}
             </ul>
             <p className="mt-2 text-[12px] text-[var(--pencil)]">
-              발주처 지침 A 3건, 특수 부하 1건, 근거 미상 1건
+              발주처 지침 A 2건, 특수 부하 1건, 근거 미상 1건 — 회사 전체 63건 가운데 0.75를 쓴 4건의 사유 전부입니다
             </p>
           </div>
 
@@ -393,8 +393,8 @@ export default function PanelScreen() {
       </div>
 
       <Foot>
-        화면의 프로젝트명, 파일명, 수치는 전부 가상 데이터입니다. 층 안 표본이
-        5건 미만인 층은 분포를 표시하지 않고 원문 링크만 제공합니다.
+        화면의 프로젝트명, 파일명, 수치는 전부 가상 데이터입니다. 같은 묶음 표본이
+        5건 미만이면 분포를 그리지 않고 원문 링크만 목록으로 제시합니다. 패널은 뜹니다.
       </Foot>
     </>
   );

@@ -320,7 +320,7 @@ export type Tool = {
 
 export const TOOLS: Tool[] = [
   {
-    id: "T-01",
+    id: "예시 가",
     name: "사내 계산 시트 「사무실 부하」",
     version: "v7.3 (2011 배포)",
     kind: "엑셀 시트",
@@ -344,7 +344,7 @@ export const TOOLS: Tool[] = [
     ],
   },
   {
-    id: "T-04",
+    id: "예시 나",
     name: "사내 도구 「급수 기구 동시사용」",
     version: "v2.1",
     kind: "엑셀 추가 기능",
@@ -361,7 +361,7 @@ export const TOOLS: Tool[] = [
     ],
   },
   {
-    id: "T-09",
+    id: "예시 다",
     name: "사내 도구 「변압기 용량 산정」",
     version: "v1.4",
     kind: "사내 웹 도구",
@@ -385,7 +385,7 @@ export const TOOLS: Tool[] = [
     ],
   },
   {
-    id: "T-11",
+    id: "예시 라",
     name: "사내 도구 「수리계산 보조」",
     version: "v3.0",
     kind: "사내 웹 도구",
@@ -395,7 +395,7 @@ export const TOOLS: Tool[] = [
       {
         symbol: "80",
         where: "K_DEFAULT",
-        meaning: "헤드 방출계수 K 기본값",
+        meaning: "헤드 방출계수 K 기본값 (L/min/(㎫)^0.5)",
         confidence: "확정",
         basis: "제품 승인 사양(예시) · 항목 확정 2026-05-11",
       },
@@ -409,7 +409,7 @@ export const TOOLS: Tool[] = [
     ],
   },
   {
-    id: "T-13",
+    id: "예시 마",
     name: "AutoLISP 매크로 「덕트 치수 자동기입」",
     version: "v0.9",
     kind: "AutoLISP 소스",
@@ -426,7 +426,7 @@ export const TOOLS: Tool[] = [
     ],
   },
   {
-    id: "T-14",
+    id: "예시 바",
     name: "사내 도구 「외기 설계조건 조회」",
     version: "v1.0",
     kind: "사내 웹 도구",

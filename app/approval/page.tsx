@@ -43,6 +43,15 @@ function Trend() {
           strokeWidth="1.5"
           strokeLinejoin="round"
         />
+        <text
+          x={pad}
+          y={11}
+          fontSize="9.5"
+          fontWeight="600"
+          fill="#6b7a63"
+        >
+          예시 — 목표치가 아닙니다
+        </text>
         {pts.map((p) => (
           <g key={p.label}>
             <circle cx={p.x} cy={p.y} r="2.6" fill="#1b2a41" />
@@ -247,8 +256,10 @@ export default function ApprovalScreen() {
             <Trend />
           </div>
           <p className="mt-3 text-[12px] leading-[1.65] text-[var(--pencil)]">
-            착수 시점 값이 기준선이 됩니다. 정확도를 목표로 걸지 않고, 값의
-            분산 축소도 목표로 걸지 않습니다.
+            1단계의 이 지표는 40건 태깅에서 사유가 발견된 행의 비율(과거 소급
+            계열)이고, 신규 입력 계열은 2단계 패널 가동일부터 셉니다. 착수 시점
+            값이 기준선이 됩니다. 정확도를 목표로 걸지 않고, 값의 분산 축소도
+            목표로 걸지 않습니다.
           </p>
         </Section>
 

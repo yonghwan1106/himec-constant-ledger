@@ -65,7 +65,7 @@ export default function Chrome({ children }: { children: React.ReactNode }) {
             <div className="tb-cell">
               시트 <span className="mono">{sheet.n}</span> {sheet.label}
             </div>
-            <div className="tb-cell">작성 박용환</div>
+            <div className="tb-cell">작성 출품자</div>
             <div className="tb-cell">
               가상 데이터 — 실제 프로젝트·실적이 아닙니다
             </div>

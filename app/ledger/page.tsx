@@ -44,6 +44,11 @@ export default function LedgerScreen() {
       {/* 1단계 1차 산출물 — 첫 화면은 한 줄로 연다 */}
       <div className="mt-7 border-t border-[var(--ink)] pt-3">
         <p className="text-[12px] text-[var(--pencil)]">
+          계수 단위 = 프로젝트 × 항목 · 규칙 판본 v1 — 같은 값인지는 단위 환산 후
+          유효숫자 규칙으로 판정합니다(여유율 15 % = 1.15). 규칙이 바뀌면 가짓수도
+          바뀝니다.
+        </p>
+        <p className="mt-2 text-[12px] text-[var(--pencil)]">
           1단계 1차 산출물 — 첫 화면은 분포가 아니라 한 줄로 엽니다
         </p>
         <p className="mt-1.5 max-w-[760px] text-[24px] leading-[1.35] font-semibold">
@@ -69,6 +74,10 @@ export default function LedgerScreen() {
               40<span className="mx-1 text-[13px]">건</span>
               <span className="text-[13px] text-[var(--pencil)]">／</span>
               30<span className="ml-1 text-[13px]">종</span>
+            </p>
+            <p className="mt-1.5 text-[12px] leading-[1.5] text-[var(--pencil)]">
+              대표 계산서 40건과 계산 도구 30종(그중 14종은 칸 보도가 전한 HDT
+              계열). 아래 6개 항목군 표본 합계 261행으로, 목표 250~600행 안입니다.
             </p>
           </div>
         </div>

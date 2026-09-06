@@ -4,7 +4,7 @@ import Link from "next/link";
 const BUREAU = [
   {
     b: "기계본부",
-    c: "인체발열 원단위, (급수·급탕 기구) 동시사용률",
+    c: "인체발열 원단위(W/인), 기기·조명 부하의 사용률(동시사용률)",
     ask: "그 원단위를 어느 설계기준·어느 발주처 지침에서 골랐는가",
   },
   {
@@ -14,8 +14,8 @@ const BUREAU = [
   },
   {
     b: "소방본부",
-    c: "헤드 방출계수 K, 여유율",
-    ask: "그 수리계산에 넣은 K와 여유율을 무엇으로 골랐는가",
+    c: "여유율, 그리고 수리계산과 규약배관 중 어느 방식을 택했는가",
+    ask: "그 방식을 왜 택했고 여유율을 무엇으로 골랐는가",
   },
 ];
 
@@ -25,7 +25,7 @@ function Hero() {
     <div className="hero mt-8">
       <div className="hero-corner" style={{ gridArea: "c" }} />
       <div className="hero-head" style={{ gridArea: "h1" }}>
-        G 수식
+        J 수식
       </div>
       <div className="hero-head hero-head-r" style={{ gridArea: "h2" }}>
         L 부하
@@ -290,7 +290,9 @@ export default function Overview() {
               사유가 붙은 값의 비율 (월별 추이)
             </p>
             <p className="mt-1.5 text-[13px] text-[var(--pencil)]">
-              정확도도 분산 축소도 목표로 걸지 않습니다.
+              1단계의 ②는 40건 태깅에서 사유가 발견된 행의 비율(과거 소급
+              계열)이고, 신규 입력 계열은 2단계 패널 가동일부터입니다. 정확도도
+              분산 축소도 목표로 걸지 않습니다.
             </p>
           </div>
         </div>
@@ -300,8 +302,13 @@ export default function Overview() {
         <div className="grid gap-x-10 gap-y-6 lg:grid-cols-3">
           <ul className="space-y-2 text-[13px] leading-[1.65]">
             <li>
-              <b className="font-semibold">정답셋</b> — 각 본부 기술사가 대표
-              계산서 40건과 도구 30종을 수기 태깅합니다(약 300~600행).
+              <b className="font-semibold">정답셋</b> — 파일럿 본부 설계 담당
+              2인이 주 2일씩 3주(12인일) 태깅하고 기술사는 확정만 합니다(3인일).
+              대표 계산서 40건과 계산 도구 30종(그중 14종은 칸 보도가 전한 HDT
+              계열), 약 250~600행입니다. 40건 중 8건은 봉인해 마지막 주에 한 번만
+              열고, 게이트 기준선과 AI ②의 오짝 비율은 봉인 표본에서만 잽니다.
+              1주차에 같은 60행을 2인이 겹쳐 태깅해 우연 일치를 제외한 일치도(κ)를
+              재며, 그 값이 이 도구의 성능 상한입니다.
             </li>
             <li>
               <b className="font-semibold">반대 방향 표본</b> — 깔끔한 최신
@@ -310,13 +317,19 @@ export default function Overview() {
             </li>
             <li>
               <b className="font-semibold">오탐 처리</b> — 잘못 묶인 항목은
-              기술사가 사전에서 분리하고 그 이력이 남습니다. 층 안 표본이 5건
-              미만이면 패널을 띄우지 않습니다.
+              기술사가 사전에서 분리하고 그 이력이 남습니다. 같은 묶음 표본이
+              5건 미만이면 분포를 그리지 않고 원문 링크만 목록으로 제시합니다
+              (패널은 뜹니다). 40건 중 5건은 사람이 전수 판독해 수집기가 후보로도
+              올리지 못한 상수 행 수를 세고, 그 누락률을 확정률과 함께 적습니다.
             </li>
             <li>
-              <b className="font-semibold">중단 조건</b> — 항목 확정률 미달 시
-              항목군을 하나로 좁혀 다시 시작하고, 사유 칸이 무의미 문자열로
-              채워지면 선택지형으로 바꿉니다.
+              <b className="font-semibold">중단 조건 셋</b> — 확정률 = 확정 행
+              수 ÷ 수집기 후보 행 수. ①확정률 <b className="font-semibold">70%
+              미만</b>이면 두 항목 중 하나로 좁힙니다 ②시트 위치 표준화가{" "}
+              <b className="font-semibold">4주</b> 안에 안 끝나면 패널을
+              미룹니다 ③사유 칸이 무의미 문자열로 채워지는 비율{" "}
+              <b className="font-semibold">30% 초과</b>면 입력 상자를 선택지형으로
+              바꿉니다.
             </li>
           </ul>
 
@@ -383,6 +396,12 @@ export default function Overview() {
               <li>
                 1단계는 외부 API 없이 사내에서 완결되는 구조로 설계하고, 도구는
                 MIT 계열로 한정합니다.
+              </li>
+              <li>
+                <b className="font-semibold">조건부 경로 ④</b> — 사내 GPU를
+                확보하지 못하면 야간 배치를 늘려 40건 규모를 CPU 추론으로
+                성립시키고, 그것도 어려우면 1단계는 규칙 ①만으로 대장을 완성하고
+                AI 대조는 2단계 첫 달로 옮깁니다.
               </li>
             </ul>
           </div>
