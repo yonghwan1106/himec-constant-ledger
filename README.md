@@ -93,7 +93,6 @@ Next.js 16 (App Router) · TypeScript · Tailwind CSS v4. 서버 액션 · API �
 | next | 16.x | MIT | 없음 |
 | react / react-dom | 19.x | MIT | 없음 |
 | tailwindcss | 4.x | MIT | 없음 |
-| lucide-react | 1.x | ISC | 없음 (v2 인터페이스는 아이콘을 쓰지 않으므로 실제 번들에 포함되지 않음) |
 | typescript | 5.x | Apache-2.0 | 없음 |
 | eslint / eslint-config-next | 9.x / 16.x | MIT | 없음 |
 | 서체 | IBM Plex Sans KR · IBM Plex Mono | SIL Open Font License 1.1 (OFL) | next/font/google로 빌드 시점에 내려받아 **자체 호스팅** — 실행 시 외부 요청 없음 |

@@ -231,7 +231,7 @@ export default function LedgerScreen() {
                   <div className="mt-2">
                     {s.hidden ? (
                       <p className="text-[12.5px] leading-[1.6]">
-                        <Unknown>표본 5건 미만</Unknown>
+                        <Chip kind="ink">표본 5건 미만</Chip>
                         <br />
                         <span className="mt-1 inline-block">
                           분포를 표시하지 않습니다. 해당 계산서 원문 링크 {s.n}

@@ -19,50 +19,75 @@ const BUREAU = [
   },
 ];
 
-/** 계산 용지 위의 스프레드시트 행 13~15 */
-function Strip() {
+/** 계산 용지 위의 스프레드시트 행 13~15 — 14행의 1.15 옆에 흰 메모지가 붙는다 */
+function Hero() {
   return (
-    <div className="tablewrap">
-      <table className="mono w-full min-w-[430px] border-collapse text-[15px]">
-        <tbody>
-          <tr>
-            <td className="w-[40px] border-r border-[var(--grid)] py-[5px] pr-2.5 text-right text-[var(--pencil)]">
-              13
-            </td>
-            <td className="py-[5px] pl-3 text-[var(--pencil)]">=D8*E13*H13</td>
-            <td className="py-[5px] pl-3 text-right whitespace-nowrap text-[var(--pencil)]">
-              4,182 W
-            </td>
-          </tr>
-          <tr>
-            <td className="border-r border-[var(--grid)] py-1 pr-2.5 text-right align-bottom text-[var(--pencil)]">
-              14
-            </td>
-            <td className="py-1 pl-3">
-              <span className="flex flex-wrap items-baseline gap-x-1">
-                <span className="text-[15px] text-[var(--pencil)]">
-                  =D8*E14*H14*
-                </span>
-                <span className="text-[48px] leading-[1.05] font-semibold text-[var(--ink)]">
-                  1.15
-                </span>
-              </span>
-            </td>
-            <td className="py-1 pl-3 text-right align-bottom whitespace-nowrap text-[var(--pencil)]">
-              5,309 W
-            </td>
-          </tr>
-          <tr>
-            <td className="border-r border-[var(--grid)] py-[5px] pr-2.5 text-right text-[var(--pencil)]">
-              15
-            </td>
-            <td className="py-[5px] pl-3 text-[var(--pencil)]">=D8*E15*H15</td>
-            <td className="py-[5px] pl-3 text-right whitespace-nowrap text-[var(--pencil)]">
-              3,970 W
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <div className="hero mt-8">
+      <div className="hero-corner" style={{ gridArea: "c" }} />
+      <div className="hero-head" style={{ gridArea: "h1" }}>
+        G 수식
+      </div>
+      <div className="hero-head hero-head-r" style={{ gridArea: "h2" }}>
+        L 부하
+      </div>
+
+      <div className="hero-num mono text-[13px]" style={{ gridArea: "r13" }}>
+        13
+      </div>
+      <div
+        className="hero-cell mono text-[15px] text-[var(--pencil)]"
+        style={{ gridArea: "f13" }}
+      >
+        =D8*E13*H13
+      </div>
+      <div
+        className="hero-cell hero-val mono text-[15px]"
+        style={{ gridArea: "v13" }}
+      >
+        4,182 W
+      </div>
+
+      <div className="hero-num mono text-[13px]" style={{ gridArea: "r14" }}>
+        14
+      </div>
+      <div className="hero-cell" style={{ gridArea: "f14" }}>
+        <span className="mono flex flex-wrap items-baseline gap-x-1">
+          <span className="text-[15px] text-[var(--pencil)]">
+            =D8*E14*H14*
+          </span>
+          <span className="text-[38px] leading-[1.05] font-semibold text-[var(--ink)] md:text-[48px]">
+            1.15
+          </span>
+        </span>
+      </div>
+      <div
+        className="hero-cell hero-val mono text-[15px]"
+        style={{ gridArea: "v14" }}
+      >
+        5,309 W
+      </div>
+
+      <div className="hero-num mono text-[13px]" style={{ gridArea: "r15" }}>
+        15
+      </div>
+      <div
+        className="hero-cell mono text-[15px] text-[var(--pencil)]"
+        style={{ gridArea: "f15" }}
+      >
+        =D8*E15*H15
+      </div>
+      <div
+        className="hero-cell hero-val mono text-[15px]"
+        style={{ gridArea: "v15" }}
+      >
+        3,970 W
+      </div>
+
+      <div className="hero-conn" aria-hidden />
+      <aside className="memo hero-memo px-4 py-3.5">
+        <p className="text-[15px] font-semibold">이 값의 근거</p>
+        <div className="mt-4 border-b border-[var(--ink)]" />
+      </aside>
     </div>
   );
 }
@@ -107,13 +132,7 @@ export default function Overview() {
   return (
     <>
       {/* 히어로 — 가장 크게 보이는 것은 숫자 하나와 그 옆의 빈 줄 */}
-      <div className="grid items-center gap-6 pt-8 lg:grid-cols-[minmax(0,1fr)_296px]">
-        <Strip />
-        <aside className="memo px-4 py-4">
-          <p className="text-[15px] font-semibold">이 값의 근거</p>
-          <div className="mt-5 border-b border-[var(--ink)]" />
-        </aside>
-      </div>
+      <Hero />
 
       <h1 className="mt-8 max-w-[900px] text-[30px] leading-[1.22] font-semibold tracking-[-0.02em] md:text-[38px]">
         우리 회사는 그 숫자를 몇 가지로 쓰고 있습니까

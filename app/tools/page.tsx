@@ -141,7 +141,7 @@ export default function ToolsScreen() {
                             </>
                           ) : (
                             <>
-                              <Unknown>소유자 지정 대상</Unknown>
+                              <Chip kind="ink">소유자 지정 대상</Chip>
                               <p className="mt-1.5 text-[12px] leading-[1.5] text-[var(--pencil)]">
                                 재검증 기한 미지정
                               </p>

@@ -7,6 +7,7 @@
 :root {
   --pad: #e7eee1; /* 지면 — 계산 용지 연녹색 */
   --grid: #c9d6c1; /* 용지 격자선 24px 모듈 · 표의 세로 구분선 */
+  --grid-fine: #d9e2d2; /* fine 24px rule */
   --ink: #1b2a41; /* 잉크 — 본문 · 확정된 값 · 규칙 구간 */
   --pencil: #4f5a63; /* 연필 — AI 구간(추정하고 제시만 한다) */
   --stamp: #be3019; /* 인주 — 사람의 서명 · 확인 · 결재 */
@@ -27,8 +28,10 @@ body {
   background-color: var(--pad);
   /* 24px 모듈 계산 용지 격자 */
   background-image: linear-gradient(to right, var(--grid) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--grid) 1px, transparent 1px);
-  background-size: 24px 24px;
+    linear-gradient(to bottom, var(--grid) 1px, transparent 1px),
+    linear-gradient(to right, var(--grid-fine) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-fine) 1px, transparent 1px);
+  background-size: 120px 120px, 120px 120px, 24px 24px, 24px 24px;
   background-position: -1px -1px;
   color: var(--ink);
   font-family: var(--font-plex-sans), system-ui, -apple-system, "Segoe UI",
@@ -171,6 +174,89 @@ main .grid > * {
 }
 
 /* ── 흰 메모지 — 이 사이트에서 유일한 흰색 ─────────────────────── */
+.hero {
+  display: grid;
+  max-width: 820px;
+  grid-template-columns: 40px minmax(0, 1fr) 96px;
+  grid-template-areas:
+    "c    h1   h2"
+    "r13  f13  v13"
+    "r14  f14  v14"
+    "r15  f15  v15"
+    "memo memo memo";
+}
+
+.hero-head {
+  font-size: 12px;
+  color: var(--pencil);
+  padding: 0 10px 4px;
+  border-bottom: 1px solid var(--ink);
+}
+
+.hero-head-r {
+  text-align: right;
+}
+
+.hero-corner {
+  border-bottom: 1px solid var(--ink);
+}
+
+.hero-num,
+.hero-cell {
+  display: flex;
+  align-items: center;
+  padding: 6px 10px;
+  border-right: 1px solid var(--hair-2);
+  border-bottom: 1px solid var(--hair-2);
+}
+
+.hero-num {
+  justify-content: flex-end;
+  background: var(--grid);
+  color: var(--pencil);
+  border-left: 1px solid var(--hair-2);
+  padding-right: 8px;
+}
+
+.hero-val {
+  justify-content: flex-end;
+  color: var(--pencil);
+  white-space: nowrap;
+}
+
+.hero-conn {
+  display: none;
+}
+
+.hero-memo {
+  grid-area: memo;
+  margin-top: 16px;
+}
+
+@media (min-width: 1024px) {
+  .hero {
+    max-width: 1122px;
+    grid-template-columns: 44px minmax(0, max-content) 112px 12px 290px;
+    justify-content: start;
+    grid-template-areas:
+      "c    h1   h2   .     ."
+      "r13  f13  v13  .     ."
+      "r14  f14  v14  conn  memo"
+      "r15  f15  v15  .     .";
+  }
+  .hero-conn {
+    display: block;
+    grid-area: conn;
+    align-self: center;
+    height: 0;
+    border-top: 1px solid var(--ink);
+  }
+  .hero-memo {
+    margin-top: 0;
+    align-self: center;
+  }
+}
+
 .memo {
   background: var(--sheet);
   border: 1px solid var(--grid);
