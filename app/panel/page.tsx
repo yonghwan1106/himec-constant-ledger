@@ -70,7 +70,7 @@ export default function PanelScreen() {
                   <tr className="mono text-[12px] text-[var(--pencil)]">
                     <th className="w-[40px] text-right">#</th>
                     <th>B 구역</th>
-                    <th>G 수식</th>
+                    <th>J 수식</th>
                     <th className="w-[132px]">H 동시사용률</th>
                     <th className="w-[92px] text-right">L 부하</th>
                   </tr>

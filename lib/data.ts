@@ -192,7 +192,7 @@ export const ITEMS: Item[] = [
   {
     id: "kfactor",
     name: "헤드 방출계수 K",
-    unit: "L/min·㎫^0.5",
+    unit: "L/min/(㎫)^0.5",
     bureau: "소방본부",
     distinct: 4,
     samples: 29,
